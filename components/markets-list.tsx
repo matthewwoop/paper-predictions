@@ -3,11 +3,15 @@
 import { useEffect, useState } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 import { MarketCard, type KalshiMarket } from './market-card'
+import { OrderDialog } from './order-dialog'
 
 export function MarketsList() {
   const [markets, setMarkets] = useState<KalshiMarket[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [selectedMarket, setSelectedMarket] = useState<KalshiMarket | null>(null)
+  const [selectedSide, setSelectedSide] = useState<'yes' | 'no' | null>(null)
 
   async function fetchMarkets() {
     try {
@@ -21,6 +25,13 @@ export function MarketsList() {
     } finally {
       setLoading(false)
     }
+  }
+
+  function handleOrder(ticker: string, side: 'yes' | 'no') {
+    const market = markets.find((m) => m.ticker === ticker) ?? null
+    setSelectedMarket(market)
+    setSelectedSide(side)
+    setDialogOpen(true)
   }
 
   useEffect(() => {
@@ -61,9 +72,15 @@ export function MarketsList() {
         <MarketCard
           key={market.ticker}
           market={market}
-          onOrder={() => {}}
+          onOrder={handleOrder}
         />
       ))}
+      <OrderDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        market={selectedMarket}
+        side={selectedSide}
+      />
     </div>
   )
 }
