@@ -4,6 +4,7 @@ import { db } from '@/db'
 import { users } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 import { BalanceDisplay } from '@/components/balance-display'
+import { PositionsTable } from '@/components/positions-table'
 
 export default async function DashboardPage() {
   const { userId } = await auth()
@@ -20,6 +21,10 @@ export default async function DashboardPage() {
     <main className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
       <BalanceDisplay initialBalance={user.balance} />
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold mb-4">Positions</h2>
+        <PositionsTable />
+      </div>
     </main>
   )
 }
