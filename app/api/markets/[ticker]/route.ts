@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server'
 
 export async function GET(
   _req: Request,
-  { params }: { params: { ticker: string } }
+  { params }: { params: Promise<{ ticker: string }> }
 ) {
-  const { ticker } = params
+  const { ticker } = await params
   const res = await fetch(
     `https://external-api.kalshi.com/trade-api/v2/markets/${ticker}`,
     { headers: { accept: 'application/json' } }
