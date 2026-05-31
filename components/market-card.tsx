@@ -54,6 +54,8 @@ export function MarketCard({ market, onOrder }: MarketCardProps) {
 
   const yesPrice = formatCents(market.yes_ask_dollars)
   const noPrice = formatCents(market.no_ask_dollars)
+  const yesAvailable = !!market.yes_ask_dollars && parseFloat(market.yes_ask_dollars) > 0
+  const noAvailable = !!market.no_ask_dollars && parseFloat(market.no_ask_dollars) > 0
 
   return (
     <Card className="flex flex-col justify-between gap-4 p-4">
@@ -90,6 +92,7 @@ export function MarketCard({ market, onOrder }: MarketCardProps) {
               size="sm"
               className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs"
               onClick={() => onOrder(market.ticker, 'yes')}
+              disabled={!yesAvailable}
             >
               Buy YES
             </Button>
@@ -98,6 +101,7 @@ export function MarketCard({ market, onOrder }: MarketCardProps) {
               <Button
                 size="sm"
                 className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs"
+                disabled={!yesAvailable}
               >
                 Buy YES
               </Button>
@@ -110,6 +114,7 @@ export function MarketCard({ market, onOrder }: MarketCardProps) {
               variant="outline"
               className="flex-1 border-rose-300 text-rose-600 hover:bg-rose-50 text-xs"
               onClick={() => onOrder(market.ticker, 'no')}
+              disabled={!noAvailable}
             >
               Buy NO
             </Button>
@@ -119,6 +124,7 @@ export function MarketCard({ market, onOrder }: MarketCardProps) {
                 size="sm"
                 variant="outline"
                 className="flex-1 border-rose-300 text-rose-600 hover:bg-rose-50 text-xs"
+                disabled={!noAvailable}
               >
                 Buy NO
               </Button>
