@@ -16,7 +16,7 @@ export function Nav() {
           {/* Left group */}
           <div className="flex items-center">
             <Link href="/" className="text-lg font-bold tracking-tight">
-              PaperTrade
+              Paper Predictions
             </Link>
           </div>
 
